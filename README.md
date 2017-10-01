@@ -38,3 +38,8 @@ Table Name | movies
 -----------|--------
 Primary Partition Key | year (Number)
 Primary Sort Key | title (String)
+
+## Lambda Environment Variables
+* S3_BUCKET
+* SRC_FILE_NAME
+* DB_TABLE_NAME

@@ -10,7 +10,7 @@ class Movies {
         console.log('START read file from S3');
         var s3Params = {
             Bucket : process.env.S3_BUCKET,
-            Key : process.env.SRC_FILE
+            Key : process.env.SRC_FILE_NAME
         };
         this.S3.getObject(s3Params, (err, data) => {
             if(err) {
@@ -100,7 +100,7 @@ class Movies {
         console.log('COMPLETE delete table: ', process.env.DB_TABLE_NAME);
         callback(null, 'success');
     }
-    
+
 }
 
 module.exports = Movies;
