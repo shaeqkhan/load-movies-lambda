@@ -1,31 +1,30 @@
 const AWS = require('aws-sdk');
-const S3 = new AWS.S3();
+const Movies = require('movies');
 
-let write = require('./write');
+const S3 = new AWS.S3();
+const dynamoDB = new AWS.DynamoDB();
+const doc = new AWS.DynamoDB.DocumentClient({
+    region: 'us-east-1'
+});
+
+let movies = new Movies(S3, doc, dynamoDB);
 
 exports.handler = (event, context, callback) => {
 
     if(event.flag == null || !event.flag) {
-        console.log('Data was not loaded to table, flag is false or DNE');
+        console.log('Feature flag is null or DNE');
     }   
+    else if(event.flag === "load") {
+        movies.read(callback);
+    }
+    else if(event.flag === "create-table") {
+        movies.createTable(callback);
+    }
+    else if(event.flag == "delete-table") {
+        movies.deleteTable(callback);
+    }
     else {
-        console.log('START read file from S3');
-        var s3Params = {
-            Bucket : process.env.S3_BUCKET,
-            Key : process.env.SRC_FILE
-        };
-        S3.getObject(s3Params, (err, data) => {
-            if(err) {
-                console.error('ERROR read file from S3: ', err);
-                callback(err);
-            }
-            else {
-                var allMovies = data.Body.toString('utf-8');
-                console.log('COMPLETE read file from S3');
-                write.toDynamoDB(allMovies);
-            }
-        });  
-    } 
-    callback(null, 'success');   
+        console.log('Event is not supported');
+    }
 
 }
