@@ -15,7 +15,7 @@ exports.handler = (event, context, callback) => {
         console.log('Feature flag is null or DNE');
     }   
     else if(event.flag === "load") {
-        movies.read(callback);
+        movies.load(callback);
     }
     else if(event.flag === "create-table") {
         movies.createTable(callback);
