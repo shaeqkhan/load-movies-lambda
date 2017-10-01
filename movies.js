@@ -6,7 +6,7 @@ class Movies {
         this.dynamoDB = dynamoDB;
     }
     
-    read(callback) {
+    load(callback) {
         console.log('START read file from S3');
         var s3Params = {
             Bucket : process.env.S3_BUCKET,
