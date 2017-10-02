@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha",
     "package": "rm -f load-movies-lambda.zip && zip -qyr load-movies-lambda.zip ."
   },
   "author": "shaeqkhan@gmail.com",
@@ -18,6 +18,8 @@
   "homepage": "https://github.com/shaeqkhan/load-movies-lambda",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk": "^2.100.0"
+    "aws-sdk": "^2.100.0",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
   }
 }
