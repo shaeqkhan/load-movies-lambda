@@ -1,13 +1,5 @@
-const AWS = require('aws-sdk');
-const Movies = require('movies');
-
-const S3 = new AWS.S3();
-const dynamoDB = new AWS.DynamoDB();
-const doc = new AWS.DynamoDB.DocumentClient({
-    region: 'us-east-1'
-});
-
-let movies = new Movies(S3, doc, dynamoDB);
+const Movies = require('./Movies');
+let movies = new Movies();
 
 exports.handler = (event, context, callback) => {
 
@@ -21,7 +13,7 @@ exports.handler = (event, context, callback) => {
         movies.createTable(callback);
     }
     else if(event.flag == "delete-table") {
-        movies.deleteTable(callback);
+        movies.deleteDynamoTable(callback);
     }
     else {
         console.log('Event is not supported');
