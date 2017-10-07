@@ -54,7 +54,7 @@ function write(allMovies) {
     console.log('COMPLETE write to DB');
 }
 
-Movies.prototype.createTable = (callback) => {
+Movies.prototype.createDynamoTable = (callback) => {
     console.log('START create table: ', process.env.DB_TABLE_NAME);
     var dbParams = {
         TableName: process.env.DB_TABLE_NAME,
@@ -71,7 +71,8 @@ Movies.prototype.createTable = (callback) => {
             WriteCapacityUnits: 5
         }
     };
-    this.dynamoDB.createTable(dbParams, (err, data) => {
+    let dynamoDB = new AWS.DynamoDB();
+    dynamoDB.createTable(dbParams, (err, data) => {
         if(err){
             console.error('ERROR creating ', process.env.DB_TABLE_NAME, ' table: ', err);
             callback(err);

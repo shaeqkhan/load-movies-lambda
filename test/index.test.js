@@ -17,6 +17,32 @@ afterEach(() => {
 
 describe('Movies', () => {
     
+    describe('#createTable', () => {
+
+        it('should create a table', () => {
+            
+            AWS.mock('DynamoDB', 'createTable', (err, callback) => {
+                callback(null, 'table created successfully');
+            });
+            var spyCallback = sinon.spy();
+            var result = index.handler({ 'flag': 'create-table' }, null, spyCallback);
+            assert.isTrue(spyCallback.withArgs(null, 'success').calledOnce);
+            
+        });
+
+        it('should throw an error', () => {
+
+            AWS.mock('DynamoDB', 'createTable', (err, callback) => {
+                callback('error');
+            });
+            var spyCallback = sinon.spy();
+            var result = index.handler({ 'flag': 'create-table' }, null, spyCallback);
+            assert.isTrue(spyCallback.withArgs('error').calledOnce);
+
+        });
+
+    });
+
     describe('#deleteTable', () => {
         
         it('should delete the table', () => {
@@ -40,7 +66,7 @@ describe('Movies', () => {
             assert.isTrue(spyCallback.withArgs('error').calledOnce);
 
         });
-        
+
     });
     
 });

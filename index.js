@@ -10,7 +10,7 @@ exports.handler = (event, context, callback) => {
         movies.load(callback);
     }
     else if(event.flag === "create-table") {
-        movies.createTable(callback);
+        movies.createDynamoTable(callback);
     }
     else if(event.flag == "delete-table") {
         movies.deleteDynamoTable(callback);
